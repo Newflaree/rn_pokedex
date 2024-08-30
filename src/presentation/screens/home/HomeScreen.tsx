@@ -10,7 +10,10 @@ import {
   Text
 } from 'react-native-paper';
 // TanStack Query
-import { useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  //useQuery
+} from '@tanstack/react-query';
 // Actions
 import { getPokemons } from '../../../actions/pokemons';
 // Components
@@ -24,9 +27,27 @@ import { globalTheme } from '../../../config/theme';
 
 export const HomeScreen = () => {
   const { top } = useSafeAreaInsets();
-  const { isLoading, data: pokemons = [] } = useQuery({
+  /*
+   * Petición tradicional
+  const {
+    isLoading,
+    data: pokemons = []
+  } = useQuery({
     queryKey: [ 'pokemons' ],
     queryFn: () => getPokemons( 0 ),
+    staleTime: 1000 * 60 * 60, // 60 min
+  });
+   * */
+
+  const {
+    isLoading,
+    data,
+    fetchNextPage
+  } = useInfiniteQuery({
+    queryKey: [ 'pokemons', 'infinite' ],
+    initialPageParam: 0,
+    queryFn: ( params ) => getPokemons( params.pageParam ),
+    getNextPageParam: ( lastPage, pages ) => pages.length,
     staleTime: 1000 * 60 * 60, // 60 min
   });
 
@@ -35,7 +56,7 @@ export const HomeScreen = () => {
       <PokeballBG style={ styles.imgPosition } />
 
       <FlatList
-        data={ pokemons }
+        data={ data?.pages.flat() ?? [] }
         keyExtractor={ ( pokemon, index ) => `${ pokemon.id }-${ index }` }
         numColumns={ 2 }
         style={{ paddingTop: top }}
@@ -45,6 +66,9 @@ export const HomeScreen = () => {
         renderItem={ ({ item: pokemon }) => (
           <PokemonCard pokemon={ pokemon } />
         )}
+        onEndReachedThreshold={ 0.6 }
+        onEndReached={ () => fetchNextPage() }
+        showsVerticalScrollIndicator={ false }
       />
     </View>
   );
