@@ -23,7 +23,8 @@ export const PokemonCard = ({ pokemon }: Props) => {
   return (
     <Card
       style={[
-        styles.cardContainer
+        styles.cardContainer,
+        { backgroundColor: pokemon.color }
       ]}
     >
       <Text
