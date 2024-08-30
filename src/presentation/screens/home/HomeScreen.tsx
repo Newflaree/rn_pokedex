@@ -7,6 +7,7 @@ import {
   Button,
   Text
 } from 'react-native-paper';
+import { getPokemons } from '../../../actions/pokemons';
 
 
 export const HomeScreen = () => {
