@@ -4,13 +4,22 @@ import 'react-native-gesture-handler';
 import { StackNavigator } from './presentation/navigator';
 // Context
 import { ThemeContextProvider } from './presentation/context';
+// TanStack
+import {
+  QueryClient,
+  QueryClientProvider
+} from '@tanstack/react-query';
 
+
+const queryClient = new QueryClient();
 
 const PokemonApp = () => {
   return (
-    <ThemeContextProvider>
-      <StackNavigator />
-    </ThemeContextProvider>
+    <QueryClientProvider client={ queryClient }>
+      <ThemeContextProvider>
+        <StackNavigator />
+      </ThemeContextProvider>
+    </QueryClientProvider>
   );
 }
 

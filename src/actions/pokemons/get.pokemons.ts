@@ -3,6 +3,7 @@ import { pokeApi } from '../../config/api';
 // Entities
 import { Pokemon } from '../../domain/entities';
 
+
 export const getPokemons = async (): Promise<Pokemon[]> => {
   try {
     const url = '/pokemon';

@@ -2668,6 +2668,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.53.1":
+  version: 5.53.1
+  resolution: "@tanstack/query-core@npm:5.53.1"
+  checksum: ac9ee0d65995e65b9b3087b59bbe9ca686765a8130d4796a6fc12456159620102263c0f899e831ff1210ab16d2b254e53274ada81d1a23b6dfc0d6bc5dd642f0
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.53.1":
+  version: 5.53.1
+  resolution: "@tanstack/react-query@npm:5.53.1"
+  dependencies:
+    "@tanstack/query-core": 5.53.1
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 1675125adf1041f7caa7f7a3413e6483711c2de57de83af0bdad2278e17682a235d0b0ce1c0c5ef1b5480b8bc7335d3ce7091c3cdd2974479da25437e27b6105
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -7918,6 +7936,7 @@ __metadata:
     "@react-native/typescript-config": 0.75.2
     "@react-navigation/native": ^6.1.18
     "@react-navigation/stack": ^6.4.1
+    "@tanstack/react-query": ^5.53.1
     "@types/react": ^18.2.6
     "@types/react-test-renderer": ^18.0.0
     axios: ^1.7.5
