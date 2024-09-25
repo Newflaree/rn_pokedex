@@ -12,6 +12,7 @@ import {
 // TanStack Query
 import {
   useInfiniteQuery,
+  useQueryClient,
   //useQuery
 } from '@tanstack/react-query';
 // Actions
@@ -27,6 +28,8 @@ import { globalTheme } from '../../../config/theme';
 
 export const HomeScreen = () => {
   const { top } = useSafeAreaInsets();
+  const queryClient = useQueryClient();
+
   /*
    * Petición tradicional
   const {
@@ -43,12 +46,19 @@ export const HomeScreen = () => {
     isLoading,
     data,
     fetchNextPage
-  } = useInfiniteQuery({
+  } = useInfiniteQuery({ 
     queryKey: [ 'pokemons', 'infinite' ],
     initialPageParam: 0,
-    queryFn: ( params ) => getPokemons( params.pageParam ),
-    getNextPageParam: ( lastPage, pages ) => pages.length,
     staleTime: 1000 * 60 * 60, // 60 min
+    queryFn: async ( params ) => {
+      const pokemons = await getPokemons( params.pageParam )
+      pokemons.forEach( pokemon => {
+        queryClient.setQueryData( [ 'pokemon', pokemon.id ], pokemon );
+      });
+
+      return pokemons;
+    },
+    getNextPageParam: ( lastPage, pages ) => pages.length,
   });
 
   return (
