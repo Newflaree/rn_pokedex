@@ -99,14 +99,72 @@ export const PokemonScreen = ({ navigation, route }: Props) => {
           marginTop: 20,
           height: 100,
         } }
-        renderItem={ ( { item } ) => (
+        renderItem={ ({ item }) => (
           <FadeInImage
             uri={ item }
             style={ { width: 100, height: 100, marginHorizontal: 5 } }
           />
-        ) }
+        )}
       />
 
+      {/* Abilities */ }
+      <Text style={ styles.subTitle }>Abilities</Text>
+      <FlatList
+        data={ pokemon.abilities }
+        horizontal
+        keyExtractor={ item => item }
+        showsHorizontalScrollIndicator={ false }
+        renderItem={ ({ item }) => (
+          <Chip selectedColor='white'>{ Formatter.capitalize( item ) }</Chip>
+        )}
+      />
+
+      {/* Stats */ }
+      <Text style={ styles.subTitle }>Stats</Text>
+      <FlatList
+        data={ pokemon.stats }
+        horizontal
+        keyExtractor={ item => item.name }
+        showsHorizontalScrollIndicator={ false }
+        renderItem={ ({ item }) => (
+          <View style={ styles.statsContainer }>
+            <Text style={{ flex: 1, color: 'white' }}>
+              { Formatter.capitalize( item.name ) }
+            </Text>
+            <Text style={{ color: 'white' }}>{ item.value }</Text>
+          </View>
+        )}
+      />
+
+      {/* Moves */ }
+      <Text style={ styles.subTitle }>Moves</Text>
+      <FlatList
+        data={ pokemon.moves }
+        horizontal
+        showsHorizontalScrollIndicator={ false }
+        centerContent
+        renderItem={ ({ item }) => (
+          <View style={ styles.statsContainer }>
+            <Text style={{ flex: 1, color: 'white' }}>
+              { Formatter.capitalize( item.name ) }
+            </Text>
+            <Text style={{ color: 'white' }}>lvl { item.level }</Text>
+          </View>
+        )}
+      />
+
+      {/* Games */ }
+      <Text style={ styles.subTitle }>Games</Text>
+      <FlatList
+        data={ pokemon.games }
+        horizontal
+        keyExtractor={ item => item }
+        showsHorizontalScrollIndicator={ false }
+        centerContent
+        renderItem={ ({ item }) => (
+          <Chip selectedColor='white'>{ Formatter.capitalize( item ) }</Chip>
+        )}
+      />
 
       <View style={ { height: 100 } } />
     </ScrollView>
